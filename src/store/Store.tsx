@@ -4,6 +4,7 @@ import { IMovie } from '../models/movie.types';
 
 type InitialContext = {
     movies: IMovie[];
+    getMovies: (movie: string) => void;
 }
 
 export const ProvideContext = createContext<InitialContext>({} as InitialContext);
@@ -12,10 +13,10 @@ type ProvideProps = {
     children: React.ReactNode;
 }
 export const StoreProvider = ({ children }: ProvideProps) => {
-    const { movies } = Movie();
+    const { movies, getMovies } = Movie();
 
     return (
-        <ProvideContext.Provider value={{ movies }}>
+        <ProvideContext.Provider value={{ movies, getMovies }}>
             {children}
         </ProvideContext.Provider>
     )
