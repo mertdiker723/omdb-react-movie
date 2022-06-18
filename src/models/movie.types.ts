@@ -25,3 +25,10 @@ export interface IMovieData {
     Year: string;
     imdbID: string;
 }
+
+
+export interface IMovieUrl {
+    id: number;
+    value: string;
+    title: string;
+}

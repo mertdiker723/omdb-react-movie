@@ -1,6 +1,7 @@
 import { Box, CssBaseline, Toolbar } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+//Material UI
+import { LinearProgress } from '@mui/material';
 // Folders
 import Movies from './pages/Movies/Movies';
 import MovieDetails from './pages/Movies/MovieDetails';
@@ -23,7 +24,7 @@ const App = () => {
             <Toolbar />
             <Routes>
               <Route path="/" element={<Movies />} />
-              <Route path="/movie-detail:id" element={<MovieDetails />} />
+              <Route path="/movie-detail/:id" element={<MovieDetails />} />
             </Routes>
           </Box>
         </Box>

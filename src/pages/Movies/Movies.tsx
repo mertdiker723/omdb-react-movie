@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from 'react';
 
 //Material UI
-import { Paper } from '@mui/material';
+import { Paper, LinearProgress  ,Box } from '@mui/material';
 
 // Folders
 import MovieTable from '../../layout/Movies/MovieTable';
@@ -12,8 +12,7 @@ import { ProvideContext } from "../../store/Store";
 
 const Movies = () => {
   const [selectedMovie, setSelectedMovie] = useState<string>("Pokemon");
-  const { getMovies } = useContext(ProvideContext);
-  // const movieUrls = ["Pokemon", "lord+of+the+rings", "batman", "spiderman", "Star+Wars"];
+  const { getMovies, loading } = useContext(ProvideContext);
 
   useEffect(() => {
     getMovies(selectedMovie);
@@ -21,7 +20,12 @@ const Movies = () => {
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <MovieFilter />
+      {loading &&
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress   />
+        </Box>
+      }
+      <MovieFilter setSelectedMovie={setSelectedMovie} />
       <MovieTable />
     </Paper>
   )
