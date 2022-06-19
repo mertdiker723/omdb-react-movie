@@ -32,3 +32,8 @@ export interface IMovieUrl {
     value: string;
     title: string;
 }
+export interface IMovieType {
+    id: number;
+    value: string;
+    title: string;
+}

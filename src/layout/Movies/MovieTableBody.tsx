@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 //Material UI
 import { TableBody, TableCell, TableRow } from '@mui/material';
@@ -6,16 +5,14 @@ import { TableBody, TableCell, TableRow } from '@mui/material';
 // Folder
 import { IMovieColumn, IMovie } from "../../models/movie.types";
 
-// Context
-import { ProvideContext } from "../../store/Store";
 
 type MovieTableBodyProps = {
   page: number;
   rowsPerPage: number;
   columns: readonly IMovieColumn[];
+  movies: IMovie[];
 }
-const MovieTableBody = ({ page, rowsPerPage, columns }: MovieTableBodyProps) => {
-  const { movies } = useContext(ProvideContext);
+const MovieTableBody = ({ page, rowsPerPage, columns, movies }: MovieTableBodyProps) => {
   let navigate = useNavigate();
   const routeToMovieDetail = (data: IMovie) => {
     navigate(`/movie-detail/${data.imdbID}`, { replace: true });

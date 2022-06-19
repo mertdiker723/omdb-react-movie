@@ -1,14 +1,18 @@
 import { useState } from "react";
-import { InputLabel, MenuItem, FormControl } from '@mui/material';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Grid } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
 
-import { IMovieUrl } from "../../models/movie.types";
+import { IMovieUrl, IMovieType } from "../../models/movie.types";
+import SelectInput from './../../components/SelectInput/SelectInput';
 
 type MovieFilterProps = {
     setSelectedMovie: React.Dispatch<React.SetStateAction<string>>;
+    setMovieType: React.Dispatch<React.SetStateAction<string>>;
+    movieType: string;
 }
-const MovieFilter = ({ setSelectedMovie }: MovieFilterProps) => {
+const MovieFilter = ({ movieType, setSelectedMovie, setMovieType }: MovieFilterProps) => {
     const [movie, setMovie] = useState<string>("Pokemon");
+
     const movieUrls: IMovieUrl[] = [
         {
             id: 1,
@@ -32,31 +36,48 @@ const MovieFilter = ({ setSelectedMovie }: MovieFilterProps) => {
         }
     ];
 
+    const movieTypes: IMovieType[] = [
+        {
+            id: 1,
+            value: "series",
+            title: "Series"
+        },
+        {
+            id: 2,
+            value: "movie",
+            title: "Movie"
+        }
+    ]
+
     const handleChange = (event: SelectChangeEvent) => {
         const { value } = event.target;
         setMovie(value);
-        setSelectedMovie(value)
-
+        setSelectedMovie(value);
     };
+
+    const handleChangeType = (event: SelectChangeEvent) => {
+        const { value } = event.target;
+        setMovieType(value);
+    }
     return (
-        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel id="demo-select-small">Movie</InputLabel>
-            <Select
-                labelId="demo-select-small"
-                id="demo-select-small"
-                value={movie}
-                label="Movie"
-                onChange={handleChange}
-            >
-                {
-                    movieUrls.map((movie) => {
-                        return (
-                            < MenuItem value={movie.value} key={movie.id} > {movie.title}</MenuItem>
-                        )
-                    })
-                }
-            </Select>
-        </FormControl >
+        <Grid container>
+            <Grid item xs={12}>
+                <SelectInput
+                    value={movie}
+                    label={"Movie"}
+                    onChange={handleChange}
+                    data={movieUrls}
+                    emptyItem={false}
+                />
+                <SelectInput
+                    value={movieType}
+                    label={"Type"}
+                    onChange={handleChangeType}
+                    data={movieTypes}
+                    emptyItem={true}
+                />
+            </Grid>
+        </Grid>
     )
 }
 

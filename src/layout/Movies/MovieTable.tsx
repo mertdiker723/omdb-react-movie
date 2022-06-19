@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 //Material UI
 import { Table, TableContainer, TablePagination } from '@mui/material';
@@ -6,10 +6,7 @@ import { Table, TableContainer, TablePagination } from '@mui/material';
 // Folders
 import MovieTableHeader from './MovieTableHeader';
 import MovieTableBody from "./MovieTableBody";
-import { IMovieColumn } from "../../models/movie.types";
-
-// Context
-import { ProvideContext } from "../../store/Store";
+import { IMovieColumn, IMovie } from "../../models/movie.types";
 
 const columns: readonly IMovieColumn[] = [
   { id: 'imdbID', label: 'Imdb ID', minWidth: 60, align: 'left' },
@@ -17,10 +14,13 @@ const columns: readonly IMovieColumn[] = [
   { id: 'Year', label: 'Year', minWidth: 100, align: 'left' },
 ];
 
-const MovieTable = () => {
+type MovieTableProps = {
+  movies: IMovie[];
+}
+
+const MovieTable = ({ movies }: MovieTableProps) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const { movies } = useContext(ProvideContext);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -41,6 +41,7 @@ const MovieTable = () => {
             page={page}
             rowsPerPage={rowsPerPage}
             columns={columns}
+            movies={movies}
           />
         </Table>
       </TableContainer>

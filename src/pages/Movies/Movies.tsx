@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from 'react';
 
 //Material UI
-import { Paper, LinearProgress  ,Box } from '@mui/material';
+import { Paper, LinearProgress, Box } from '@mui/material';
 
 // Folders
 import MovieTable from '../../layout/Movies/MovieTable';
@@ -12,21 +12,29 @@ import { ProvideContext } from "../../store/Store";
 
 const Movies = () => {
   const [selectedMovie, setSelectedMovie] = useState<string>("Pokemon");
-  const { getMovies, loading } = useContext(ProvideContext);
+  const [movieType, setMovieType] = useState<string>("");
+
+  const { getMovies, loading, movies } = useContext(ProvideContext);
 
   useEffect(() => {
     getMovies(selectedMovie);
   }, [selectedMovie]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const typeFilter = movieType === "" ? movies : movies.filter(mov => mov.Type === movieType);
+
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       {loading &&
         <Box sx={{ width: '100%' }}>
-          <LinearProgress   />
+          <LinearProgress />
         </Box>
       }
-      <MovieFilter setSelectedMovie={setSelectedMovie} />
-      <MovieTable />
+      <MovieFilter
+        setSelectedMovie={setSelectedMovie}
+        setMovieType={setMovieType}
+        movieType={movieType}
+      />
+      <MovieTable movies={typeFilter} />
     </Paper>
   )
 }
